@@ -106,6 +106,10 @@ MY_SECRET=$MY_SECRET
 
 When reopening a PR, if some commits have been made after closing and before reopening, two jobs will be launched (`reopened` and `synchronize`) and one of them will fail (hopefully `synchronize`).
 
+### Concurrent builds
+
+Don't push too fast :-) Concurrent builds will fail because there will be a deploy lock on the dokku app.
+
 ### TODO
 
 - [x] handle linked service creation (eg a database)
