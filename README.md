@@ -21,6 +21,7 @@ If you simply want to deploy a branch to an existing dokku app, you can use [thi
   id: deploy
   uses: abulte/dokku-pr-action@HEAD
   env:
+    GITHUB_EVENT_ACTION: "${{ github.event.action }}"
     PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
     HOST: dokku.example.com
     PROJECT: my-project
@@ -39,6 +40,7 @@ You'll need to provide some env to use the action.
 - **HOST**: The host the action will SSH to run the git push command. ie, `your.site.com`.
 - **PROJECT**: The project is Dokku project name.
 - **PORT**: Port of the sshd listen to, `22` is set by default.
+- **GITHUB_EVENT_ACTION**: `${{ github.event.action }}` result
 
 ### Optional Environments
 
