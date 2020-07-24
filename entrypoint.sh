@@ -51,7 +51,8 @@ then
     if [ -n "$LINKED_SERVICE" ]
     then
         echo "Removing linked service"
-        $GIT_SSH_COMMAND dokku@$HOST "$LINKED_SERVICE:destroy $APP_NAME <<< $APP_NAME"
+        # <<< $APP_NAME is used to confirm, --force is not supported here
+        $GIT_SSH_COMMAND dokku@$HOST "$LINKED_SERVICE:destroy $APP_NAME" <<< $APP_NAME
     fi
     exit 0
 fi

@@ -67,3 +67,4 @@ When reopening a PR, if some commits have been made after closing and before reo
 ### TODO
 
 - [ ] handle linked service creation (eg a database)
+- [ ] handle setting some config var on dokku app
