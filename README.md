@@ -77,6 +77,10 @@ TEST_CONFIG_2=b
 
 Will execute `dokku config:set --no-restart {app} TEST_CONFIG=a TEST_CONFIG_2=b`.
 
+## Advanced usage
+
+[See this file for a full fledged example with github deployments included](example/preview.yml).
+
 ## Known limitations
 
 ### Reopening a PR
