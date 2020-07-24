@@ -39,7 +39,7 @@ if [ "$GITHUB_EVENT_ACTION" = "closed" ]
 then
     echo "Deleting app $APP_NAME"
     # delete app and exit
-    $GIT_SSH_COMMAND dokku@$HOST "--force apps:destroy $APP_NAME"
+    $GIT_SSH_COMMAND dokku@$HOST "apps:destroy --force $APP_NAME"
     exit 0
 fi
 
