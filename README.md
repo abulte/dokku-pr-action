@@ -11,7 +11,7 @@ The created app will:
 - have a name generated from the projet and PR, eg `{my-project}-refs-pull-{pr}-merge`
 - will be accessible through HTTPS at `https://{my-project}-refs-pull-{pr}-merge.dokku.example.com` (this URL will be accessible via the `url` output, cf below)
 
-Optionnaly the plugin can create a linked service (eg database) that will be automatically linked to your app. It will be removed when the PR is closed. See `LINKED_SERVICE` below.
+Optionnaly the action can create a linked service (eg database) that will be automatically linked to your app. It will be removed when the PR is closed. See `LINKED_SERVICE` below.
 
 If you simply want to deploy a branch to an existing dokku app, you can use [this action instead](https://github.com/vitalyliber/dokku-github-action).
 
