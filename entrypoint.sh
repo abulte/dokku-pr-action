@@ -33,6 +33,13 @@ then
     echo "Creating app $APP_NAME"
     # create app
     $GIT_SSH_COMMAND dokku@$HOST "apps:create $APP_NAME" || true
+    # create linked service
+    if [ -n "$LINKED_SERVICE" ]
+    then
+        echo "Creating linked service"
+        $GIT_SSH_COMMAND dokku@$HOST "$LINKED_SERVICE:create $APP_NAME"
+        $GIT_SSH_COMMAND dokku@$HOST "$LINKED_SERVICE:link $APP_NAME $APP_NAME"
+    fi
 fi
 
 if [ "$GITHUB_EVENT_ACTION" = "closed" ]
@@ -41,6 +48,11 @@ then
     # delete app and exit
     # --force requires dokku>=0.21.3
     $GIT_SSH_COMMAND dokku@$HOST "apps:destroy --force $APP_NAME"
+    if [ -n "$LINKED_SERVICE" ]
+    then
+        echo "Removing linked service"
+        $GIT_SSH_COMMAND dokku@$HOST "$LINKED_SERVICE:destroy $APP_NAME <<< $APP_NAME"
+    fi
     exit 0
 fi
 
@@ -60,12 +72,4 @@ then
     # CAVEAT won't return fail status code if error occurs
     echo "Allowing SSL on $APP_NAME"
     $GIT_SSH_COMMAND dokku@$HOST "letsencrypt $APP_NAME"
-
-    # create linked service
-    if [ -n "$LINKED_SERVICE" ]
-    then
-        echo "Creating linked service"
-        $GIT_SSH_COMMAND dokku@$HOST "$LINKED_SERVICE:create $APP_NAME"
-        $GIT_SSH_COMMAND dokku@$HOST "$LINKED_SERVICE:link $APP_NAME $APP_NAME"
-    fi
 fi
