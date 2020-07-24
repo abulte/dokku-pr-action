@@ -25,14 +25,13 @@ fi
 REF=$(echo $GITHUB_REF | sed -e 's/\//-/g')
 APP_NAME="$PROJECT-$REF"
 
-# TODO: synchronized is also triggered when reopened :-(
+# CAVEAT: synchronized is also triggered when reopened
+# if some commits have been made in the meantime :-(
 if [ "$GITHUB_EVENT_ACTION" = "opened" ] || [ "$GITHUB_EVENT_ACTION" = "reopened" ]
 then
     echo "Creating app $APP_NAME"
     # create app
     $GIT_SSH_COMMAND dokku@$HOST "apps:create $APP_NAME" || true
-    # enable ssl
-    $GIT_SSH_COMMAND dokku@$HOST "letsencrypt $APP_NAME"
 fi
 
 if [ "$GITHUB_EVENT_ACTION" = "closed" ]
@@ -53,3 +52,11 @@ GIT_SSH_COMMAND="$GIT_SSH_COMMAND" $GIT_COMMAND
 
 URL="https://$APP_NAME.$HOST"
 echo "::set-output name=url::$URL"
+
+if [ "$GITHUB_EVENT_ACTION" = "opened" ] || [ "$GITHUB_EVENT_ACTION" = "reopened" ]
+then
+    # enable ssl
+    # CAVEAT won't return fail status code if error occurs
+    echo "Allowing SSL on $APP_NAME"
+    $GIT_SSH_COMMAND dokku@$HOST "letsencrypt $APP_NAME"
+fi
