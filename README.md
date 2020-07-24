@@ -18,7 +18,10 @@ If you simply want to deploy a branch to an existing dokku app, you can use [thi
 ## Usage
 
 ```
-# deploy app
+on:
+  pull_request:
+    types: [opened, synchronize, closed, reopened]
+
 - name: dokku deploy
   id: deploy
   uses: abulte/dokku-pr-action@HEAD
@@ -65,7 +68,7 @@ The Success/Failure of the action.
 
 ### Reopening a PR
 
-When reopening a PR, if some commits have been made after closing and before reopening, two jobs will be launched (`reopened` and `synchronized`) and one of them will fail (hopefully `synchronized`)
+When reopening a PR, if some commits have been made after closing and before reopening, two jobs will be launched (`reopened` and `synchronize`) and one of them will fail (hopefully `synchronize`).
 
 ### TODO
 

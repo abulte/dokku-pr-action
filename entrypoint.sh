@@ -57,6 +57,13 @@ then
     exit 0
 fi
 
+if [ -f ".env.dokku-pr" ]
+then
+    echo "Setting config variables from .env.dokku-pr"
+    DOKKU_CONFIG=$(tr '\n' ' ' < .env.dokku-pr)
+    $GIT_SSH_COMMAND dokku@$HOST "config:set --no-restart $APP_NAME $DOKKU_CONFIG"
+fi
+
 echo "The deploy is starting"
 
 GIT_COMMAND="git push --force dokku@$HOST:$APP_NAME HEAD:refs/heads/master"
