@@ -64,6 +64,19 @@ You can optionally provide the following:
 
 The Success/Failure of the action.
 
+### Passing configuration variables to dokku
+
+By commiting a `.env.dokku-pr` file at the root of your repo, the action will trigger `config:set` for all the variables defined there, at each deploy.
+
+Example file:
+
+```
+TEST_CONFIG=a
+TEST_CONFIG_2=b
+```
+
+Will execute `dokku config:set --no-restart {app} TEST_CONFIG=a TEST_CONFIG_2=b`.
+
 ## Known limitations
 
 ### Reopening a PR
@@ -73,5 +86,5 @@ When reopening a PR, if some commits have been made after closing and before reo
 ### TODO
 
 - [x] handle linked service creation (eg a database)
-- [ ] handle setting some config var on dokku app
+- [x] handle setting some config var on dokku app
 - [ ] release v1
