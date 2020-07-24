@@ -11,6 +11,8 @@ The created app will:
 - have a name generated from the projet and PR, eg `{my-project}-refs-pull-{pr}-merge`
 - will be accessible through HTTPS at `https://{my-project}-refs-pull-{pr}-merge.dokku.example.com` (this URL will be accessible via the `url` output, cf below)
 
+Optionnaly the plugin can create a linked service (eg database) that will be automatically linked to your app. It will be removed when the PR is closed. See `LINKED_SERVICE` below.
+
 If you simply want to deploy a branch to an existing dokku app, you can use [this action instead](https://github.com/vitalyliber/dokku-github-action).
 
 ## Usage
@@ -47,6 +49,7 @@ You'll need to provide some env to use the action.
 You can optionally provide the following:
 
 - **HOST_KEY**: The results of running `ssh-keyscan -t rsa $HOST`. Use this if you want to check that the host you're deploying to is the right one (e.g. has the same keys).
+- **LINKED_SERVICE**: `mysql`, `postgres`, `mongo`... You need the corresponding plugins to be installed on dokku ([eg this one for postgres](https://github.com/dokku/dokku-postgres)). The plugins must honor the `:create` and `:destroy` CLI syntax.
 
 ### Output
 
@@ -66,5 +69,5 @@ When reopening a PR, if some commits have been made after closing and before reo
 
 ### TODO
 
-- [ ] handle linked service creation (eg a database)
+- [x] handle linked service creation (eg a database)
 - [ ] handle setting some config var on dokku app
