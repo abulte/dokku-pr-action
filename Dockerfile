@@ -1,4 +1,4 @@
-FROM alpine/git
+FROM lholota/bash-git
 
 # Github labels
 LABEL "com.github.actions.name"="dokku-pr-action"
