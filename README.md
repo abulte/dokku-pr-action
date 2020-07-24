@@ -96,6 +96,8 @@ In `.env.dokku-pr`:
 MY_SECRET=$MY_SECRET
 ```
 
+While testing this action, secrets have always been replaced by `***` in the build logs. Be careful still, because dokku will try to output the value.
+
 ## Advanced usage
 
 [See this file for a full fledged example with github deployments included](example/preview.yml).
