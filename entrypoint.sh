@@ -25,7 +25,7 @@ fi
 REF=$(echo $GITHUB_REF | sed -e 's/\//-/g')
 APP_NAME="$PROJECT-$REF"
 
-# TODO: synchronized is only triggered when reopened :-(
+# TODO: synchronized is also triggered when reopened :-(
 if [ "$GITHUB_EVENT_ACTION" = "opened" ] || [ "$GITHUB_EVENT_ACTION" = "reopened" ]
 then
     echo "Creating app $APP_NAME"
@@ -39,6 +39,7 @@ if [ "$GITHUB_EVENT_ACTION" = "closed" ]
 then
     echo "Deleting app $APP_NAME"
     # delete app and exit
+    # --force requires dokku>=0.21.3
     $GIT_SSH_COMMAND dokku@$HOST "apps:destroy --force $APP_NAME"
     exit 0
 fi
