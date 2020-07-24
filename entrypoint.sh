@@ -2,6 +2,7 @@
 set -e
 
 echo "Triggered by: $GITHUB_EVENT_ACTION"
+echo "Linked service: $LINKED_SERVICE"
 
 echo "Setting up SSH directory"
 SSH_PATH="$HOME/.ssh"
@@ -59,4 +60,12 @@ then
     # CAVEAT won't return fail status code if error occurs
     echo "Allowing SSL on $APP_NAME"
     $GIT_SSH_COMMAND dokku@$HOST "letsencrypt $APP_NAME"
+
+    # create linked service
+    if [ -n "$LINKED_SERVICE" ]
+    then
+        echo "Creating linked service"
+        $GIT_SSH_COMMAND dokku@$HOST "$LINKED_SERVICE:create $APP_NAME"
+        $GIT_SSH_COMMAND dokku@$HOST "$LINKED_SERVICE:link $APP_NAME $APP_NAME"
+    fi
 fi
