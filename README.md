@@ -66,6 +66,8 @@ The Success/Failure of the action.
 
 ### Passing configuration variables to dokku
 
+#### Standard variables
+
 By commiting a `.env.dokku-pr` file at the root of your repo, the action will trigger `config:set` for all the variables defined there, at each deploy.
 
 Example file:
@@ -76,6 +78,23 @@ TEST_CONFIG_2=b
 ```
 
 Will execute `dokku config:set --no-restart {app} TEST_CONFIG=a TEST_CONFIG_2=b`.
+
+#### Secret variables
+
+Pro tip: you can even inject Github secrets.
+
+In workflow definition:
+
+```
+  env:
+    MY_SECRET: ${{ secrets.MY_SECRET }}
+```
+
+In `.env.dokku-pr`:
+
+```
+MY_SECRET=$MY_SECRET
+```
 
 ## Advanced usage
 
